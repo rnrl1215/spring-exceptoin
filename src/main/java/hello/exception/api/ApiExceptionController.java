@@ -1,5 +1,7 @@
 package hello.exception.api;
 
+import hello.exception.exception.UserException;
+import jdk.jshell.spi.ExecutionControl;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
@@ -15,6 +17,15 @@ public class ApiExceptionController {
     public MemberDto getMember(@PathVariable String id) {
         if (id.equals("ex")) {
             throw new RuntimeException("잟못된 사용자");
+        }
+
+        if (id.equals("bad")) {
+            throw new IllegalArgumentException("잘못된 익셉션");
+        }
+
+        if (id.equals("user-ex")) {
+            // 서블릿까지 갔다가 다시 복잡한 과정을 반복한다.
+            throw new UserException("sdasdsa");
         }
 
         return new MemberDto(id, "hello" + id);
